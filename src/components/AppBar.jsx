@@ -1,6 +1,5 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import catLogo from "./images/catLogo.png";
 import catLogoMirror from "./images/catLogoMirror.png";
@@ -23,12 +22,18 @@ function myAppBar({ toggleDrawer }) {
     <AppBar
       position="static"
       onClick={toggleDrawer(true)}
-      sx={(theme) => styles.appBar(theme)}
+      // onClick={() => {toggleDrawer(true); console.log("test"); }} proč tohle nefunguje
+      sx={styles.appBar}
+      data-testid="app-bar"
     >
       <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
-        <img src={catLogo} style={styles.catImage} />
-        <img src={catMiddle} style={styles.catLogo} />
-        <img src={catLogoMirror} style={styles.catImage} />
+        <img src={catLogo} style={styles.catImage} data-testid="cat-logo" />
+        <img src={catMiddle} style={styles.catLogo} data-testid="cat-middle" />
+        <img
+          src={catLogoMirror}
+          style={styles.catImage}
+          data-testid="cat-logo-mirror"
+        />
       </Toolbar>
     </AppBar>
   );
