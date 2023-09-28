@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from './AppBar';
 import Sidebar from './Sidebar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -16,16 +17,15 @@ function Site() {
 
   return (
     <BrowserRouter>
-      <React.Fragment>
-        <AppBar toggleDrawer={toggleDrawer} />
-        <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer} />
-        <Routes>
-        <Route path="/home" element={<Home />} /> 
-          <Route path="/vote" element={<Vote />} />
-          <Route path="/breeds" element={<Breeds />} />
-          <Route path="/image-search" element={<ImageSearch />} />
-        </Routes>
-      </React.Fragment>
+      <CssBaseline />
+      <AppBar toggleDrawer={toggleDrawer} />
+      <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer} />
+      <Routes>
+      <Route path="/home" element={<Home />} /> 
+        <Route path="/vote" element={<Vote />} />
+        <Route path="/breeds" element={<Breeds />} />
+        <Route path="/image-search" element={<ImageSearch />} />
+      </Routes>
     </BrowserRouter>
   );
 }
