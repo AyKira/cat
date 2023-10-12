@@ -5,7 +5,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import catSideBat from "./images/catSideBat.png";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import ButtonBase from "@mui/material/ButtonBase";
+import { Link, useNavigate } from "react-router-dom";
 
 const styles = {
   sideBar: (theme) => ({
@@ -20,18 +21,25 @@ const styles = {
 };
 
 function Sidebar({ isOpen, toggleDrawer }) {
+  const navigate = useNavigate();
+
+  const handleClickLink = (href) => () => {
+    navigate(href);
+    toggleDrawer();
+  };
+
   return (
-    <Drawer open={isOpen} onClose={toggleDrawer(false)} data-testid="side-bar">
-      <Link to="/home">
+    <Drawer open={isOpen} onClose={toggleDrawer} data-testid="side-bar">
+      <ButtonBase
+        onClick={() => alert('mrdko')}
+      >
         <img src={catSideBat} style={styles.sideCat} />
-      </Link>
+      </ButtonBase>
       <List>
         <ListItem>
-          <Link to="/vote">
-            <Button variant="contained" fullWidth sx={styles.sideBar}>
-              VOTE
-            </Button>
-          </Link>
+          <Button variant="contained" fullWidth onClick={handleClickLink('/vote')} sx={styles.sideBar}>
+            VOTE
+          </Button>
         </ListItem>
         <ListItem>
           <Link to="/breeds">

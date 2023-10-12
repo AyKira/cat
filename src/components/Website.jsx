@@ -11,8 +11,8 @@ import Home from "./Home";
 function Site() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDrawer = (isOpen) => () => {
-    setIsOpen(isOpen);
+  const toggleDrawer = () => {
+    setIsOpen(!isOpen);
   };
 
   return (

@@ -1,20 +1,16 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import "@testing-library/jest-dom";
 
-test("Sidebar is visible and toggleDrawer i called with false  ", async () => {
-  const toggleDrawer = jest.fn();
-  const user = userEvent;
-  const { getByTestId } = render(<Sidebar toggleDrawer={toggleDrawer} isOpen={true} />);
-  // jak zkontroluju že je sidebar otevřený? 
+// že sidebar není vidět když isOpen je false
+// že zavření sidebaru vyvolá funkci toggleDrawer
+// že kliknutí na jednotlivá tlačítka pushne do historie a vyvolá toggleDrawer (možná jest.spyOn())
+
+test("Sidebar is visible and toggleDrawer i called with false  ", () => {
+  render(<MemoryRouter><Sidebar toggleDrawer={() => {}} isOpen={true} /></MemoryRouter>);
   
-  const sideBar = getByTestId("side-bar");
-
-  expect(sideBar).toBeVisible();
-
-  await user.click(sideBar);
-  expect(toggleDrawer).toHaveBeenCalledTimes(1);
-  expect(toggleDrawer).toHaveBeenCalledWith(false);
+  expect(screen.getByTestId('side-bar')).toBeVisible();
 });

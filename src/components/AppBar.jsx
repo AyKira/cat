@@ -21,8 +21,7 @@ function myAppBar({ toggleDrawer }) {
   return (
     <AppBar
       position="static"
-      onClick={toggleDrawer(true)}
-      // onClick={() => {toggleDrawer(true); console.log("test"); }} proč tohle nefunguje
+      onClick={toggleDrawer}
       sx={styles.appBar}
       data-testid="app-bar"
     >
