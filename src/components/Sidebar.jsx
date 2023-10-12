@@ -23,34 +23,36 @@ const styles = {
 function Sidebar({ isOpen, toggleDrawer }) {
   const navigate = useNavigate();
 
-  const handleClickLink = (href) => () => {
-    navigate(href);
-    toggleDrawer();
-  };
+  function handleClickLink(href) {
+    return function () {
+      navigate(href);
+      toggleDrawer();
+    };
+  }
 
   return (
     <Drawer open={isOpen} onClose={toggleDrawer} data-testid="side-bar">
       <ButtonBase
-        onClick={() => alert('mrdko')}
+        onClick={handleClickLink('/')}
       >
-        <img src={catSideBat} style={styles.sideCat} />
+        <img src={catSideBat} style={styles.sideCat} data-testid="cat" />
       </ButtonBase>
       <List>
         <ListItem>
-          <Button variant="contained" fullWidth onClick={handleClickLink('/vote')} sx={styles.sideBar}>
+          <Button variant="contained" fullWidth onClick={handleClickLink('/vote')} data-testid="VOTE"  sx={styles.sideBar}>
             VOTE
           </Button>
         </ListItem>
         <ListItem>
           <Link to="/breeds">
-            <Button variant="contained" fullWidth sx={styles.sideBar}>
+            <Button variant="contained"  fullWidth onClick={handleClickLink('/breeds')} data-testid="BREEDS" sx={styles.sideBar}>
               BREEDS
             </Button>
           </Link>
         </ListItem>
         <ListItem>
           <Link to="/image-search">
-            <Button variant="contained" fullWidth sx={styles.sideBar}>
+            <Button variant="contained" fullWidth onClick={handleClickLink('/image-search')} data-testid="IMAGE/SEARCH" sx={styles.sideBar}>
               IMAGE/SEARCH
             </Button>
           </Link>

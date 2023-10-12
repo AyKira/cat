@@ -1,0 +1,5 @@
+Degug:
+screen.debug()
+
+alert:
+onClick={() => alert('mrdko')}

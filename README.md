@@ -8,3 +8,21 @@ npm i @testing-library/user-event
 npm install --save npm-git-install
 git add . ; git commit -m "test na to kam se to ulozi" ; git push -u origin master
 git pull origin master
+
+
+29.9.2023
+
+Použij:
+userEvent.setup()
+user.click(screen)
+
+Degug:
+screen.debug()
+
+Ukol:
+Po kliknutí na button close
+// že sidebar není vidět když isOpen je false
+// že zavření sidebaru vyvolá funkci toggleDrawer DONE
+// že kliknutí na jednotlivá tlačítka pushne do historie a vyvolá toggleDrawer (možná jest.spyOn())
+
+

@@ -11,9 +11,9 @@ import Home from "./Home";
 function Site() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDrawer = () => {
+  function toggleDrawer() {
     setIsOpen(!isOpen);
-  };
+  }
 
   return (
     <BrowserRouter>
@@ -21,7 +21,7 @@ function Site() {
       <AppBar toggleDrawer={toggleDrawer} />
       <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer} />
       <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/vote" element={<Vote />} />
         <Route path="/breeds" element={<Breeds />} />
         <Route path="/image-search" element={<ImageSearch />} />

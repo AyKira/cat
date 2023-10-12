@@ -6,9 +6,9 @@ import catLogoMirror from "./images/catLogoMirror.png";
 import catMiddle from "./images/catMiddle.png";
 
 const styles = {
-  appBar: (theme) => ({
-    backgroundColor: theme.palette.common.black,
-  }),
+  appBar: {
+    backgroundColor: theme => theme.palette.common.black,
+  },
   catImage: {
     width: 240,
   },
@@ -21,7 +21,7 @@ function myAppBar({ toggleDrawer }) {
   return (
     <AppBar
       position="static"
-      onClick={toggleDrawer}
+      onClick={() => toggleDrawer(true)}
       sx={styles.appBar}
       data-testid="app-bar"
     >

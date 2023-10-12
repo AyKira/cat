@@ -5,12 +5,30 @@ import { MemoryRouter } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import "@testing-library/jest-dom";
 
-// že sidebar není vidět když isOpen je false
-// že zavření sidebaru vyvolá funkci toggleDrawer
-// že kliknutí na jednotlivá tlačítka pushne do historie a vyvolá toggleDrawer (možná jest.spyOn())
+//side bar ukazije 3 tlačitka a 1 kočičku, každa ma link někam
 
-test("Sidebar is visible and toggleDrawer i called with false  ", () => {
-  render(<MemoryRouter><Sidebar toggleDrawer={() => {}} isOpen={true} /></MemoryRouter>);
-  
+test("Sidebar is visible and toggleDrawer and 3 button and picture of car", () => {
+  render(<MemoryRouter><Sidebar toggleDrawer={() => { }} isOpen={true} /></MemoryRouter>);
+
   expect(screen.getByTestId('side-bar')).toBeVisible();
+  expect(screen.getByTestId('cat')).toBeVisible();
+  expect(screen.getByTestId('VOTE')).toBeVisible();
+  expect(screen.getByTestId('BREEDS')).toBeVisible();
+  expect(screen.getByTestId('IMAGE/SEARCH')).toBeVisible();
 });
+
+
+test("Test link vote", async () => {
+  const user = userEvent.setup();
+  render(
+    <MemoryRouter initialEntries={["/"]}><Sidebar toggleDrawer={() => { }} isOpen={true} /></MemoryRouter>
+  );
+  console.log(window.location.pathname)
+  await user.click(screen.getByTestId('VOTE'));
+  console.log(window.location.pathname)
+  await expect(window.location.pathname).toBe("/vote"); // wtf dopiči už proč jsem poříd na / 
+
+});
+
+
+

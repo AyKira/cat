@@ -10,12 +10,13 @@ test("AppBar is visible ", () => {
   expect(screen.getByTestId('app-bar')).toBeVisible();
 });
 
-test("clicking to appbar will trigger toggleDrawer ", async () => {
+
+test("clicking the AppBar will trigger toggleDrawer with true", async () => {
   const toggleDrawer = jest.fn();
   const user = userEvent.setup();
   render(<MyAppBar toggleDrawer={toggleDrawer} />);
 
   await user.click(screen.getByTestId('app-bar'));
   expect(toggleDrawer).toHaveBeenCalledTimes(1);
-  expect(toggleDrawer).toHaveBeenCalledWith(true);
+  expect(toggleDrawer).toHaveBeenCalledWith(true); 
 });
