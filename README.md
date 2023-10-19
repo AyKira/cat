@@ -10,8 +10,10 @@ git add . ; git commit -m "test na to kam se to ulozi" ; git push -u origin mast
 git pull origin master
 
 
-29.9.2023
 
+
+********************************************************************************************************************************************
+29.9.2023 
 Použij:
 userEvent.setup()
 user.click(screen)
@@ -27,4 +29,6 @@ Po kliknutí na button close
 
 
 poitřebujes redux toolkit a axios 
+
+
 

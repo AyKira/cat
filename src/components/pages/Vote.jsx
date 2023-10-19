@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import image1 from "./catPic/image1.jpg";
-import image2 from "./catPic/image2.jpg";
-import image3 from "./catPic/image3.jpg";
-import image4 from "./catPic/image4.jpg";
+import { incrementPictureIndex } from '../../voteSlice';
+import image1 from "../images/image1.jpg";
+import image2 from "../images/image2.jpg";
+import image3 from "../images/image3.jpg";
+import image4 from "../images/image1.jpg";
+export const pictures = [image1, image2, image3, image4];
 
 const styles = {
   buttons1: {
@@ -21,18 +24,12 @@ const styles = {
   },
 };
 
-const pictures = [
-  image1,
-  image2,
-  image3,
-  image4,
-];
-
 function Vote() {
-  const [currentPictureIndex, setCurrentPictureIndex] = useState(0);
+  const currentPictureIndex = useSelector((state) => state.vote.currentPictureIndex);
+  const dispatch = useDispatch();
 
   function showNextPicture() {
-    setCurrentPictureIndex((currentPictureIndex + 1) % pictures.length);
+    dispatch(incrementPictureIndex());
   }
 
   return (

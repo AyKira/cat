@@ -3,12 +3,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "./AppBar";
 import Sidebar from "./Sidebar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Vote from "./Vote";
-import Breeds from "./Breeds";
-import ImageSearch from "./ImageSearch";
-import Home from "./Home";
+import Vote from "./pages/Vote";
+import Breeds from "./pages/Breeds";
+import ImageSearch from "./pages/ImageSearch";
+import Home from "./pages/Home";
 
-function Site() {
+function Website() {
   const [isOpen, setIsOpen] = useState(false);
 
   function toggleDrawer() {
@@ -30,4 +30,4 @@ function Site() {
   );
 }
 
-export default Site;
+export default Website;

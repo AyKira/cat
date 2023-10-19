@@ -1,9 +1,9 @@
 import AppBar from "./AppBar";
 import SideBar from "./Sidebar";
 import Website from "./Website";
-import Vote from "./Vote";
-import Breeds from "./Breeds";
-import ImageSearch from "./ImageSearch";
-import Home from "./Home";
+import Vote from "./pages/Vote";
+import Breeds from "./pages/Breeds";
+import ImageSearch from "./pages/ImageSearch";
+import Home from "./pages/Home";
 
 export { AppBar, SideBar, Website, Vote, Breeds, ImageSearch, Home };
