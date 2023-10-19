@@ -23,11 +23,10 @@ test("Test link vote", async () => {
   render(
     <MemoryRouter initialEntries={["/"]}><Sidebar toggleDrawer={() => { }} isOpen={true} /></MemoryRouter>
   );
-  console.log(window.location.pathname)
-  await user.click(screen.getByTestId('VOTE'));
-  console.log(window.location.pathname)
-  await expect(window.location.pathname).toBe("/vote"); // wtf dopiči už proč jsem poříd na / 
 
+  await user.click(screen.getByTestId('VOTE'));
+  await expect(window.location.pathname).toBe("/vote"); // wtf dopiči už proč jsem poříd na / 
+  //ses dement a tohle je test nazhovno, musí se testovat akce po klinutí. Používá se jest.spyOn 
 });
 
 

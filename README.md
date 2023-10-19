@@ -26,3 +26,5 @@ Po kliknutí na button close
 // že kliknutí na jednotlivá tlačítka pushne do historie a vyvolá toggleDrawer (možná jest.spyOn())
 
 
+poitřebujes redux toolkit a axios 
+
