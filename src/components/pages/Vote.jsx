@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import { incrementPictureIndex } from '../../voteSlice';
 import image1 from "../images/image1.jpg";
 import image2 from "../images/image2.jpg";
 import image3 from "../images/image3.jpg";
@@ -25,12 +24,7 @@ const styles = {
 };
 
 function Vote() {
-  const currentPictureIndex = useSelector((state) => state.vote.currentPictureIndex);
   const dispatch = useDispatch();
-
-  function showNextPicture() {
-    dispatch(incrementPictureIndex());
-  }
 
   return (
     <Grid container spacing={2} columns={2} justifyContent="center" style={{ marginTop: '20px' }}>
@@ -38,7 +32,7 @@ function Vote() {
         <Button
           variant="contained"
           style={styles.buttons1}
-          onClick={showNextPicture}
+          onClick={() => { }}
         >
           Love it!
         </Button>
@@ -47,14 +41,14 @@ function Vote() {
         <Button
           variant="contained"
           style={styles.buttons2}
-          onClick={showNextPicture}
+          onClick={() => { }}
         >
           Nope it!
         </Button>
       </Grid>
       <Grid item xs={2}>
         <img
-          src={pictures[currentPictureIndex]}
+          src={pictures[0]}
           alt="Current Picture"
           style={styles.picture}
         />
