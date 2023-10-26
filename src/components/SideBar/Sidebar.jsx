@@ -3,7 +3,7 @@ import React from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import catSideBat from "./images/catSideBat.png";
+import catSideBat from "../Images/catSideBat.png";
 import Button from "@mui/material/Button";
 import ButtonBase from "@mui/material/ButtonBase";
 import { Link, useNavigate } from "react-router-dom";
@@ -39,13 +39,13 @@ function Sidebar({ isOpen, toggleDrawer }) {
       </ButtonBase>
       <List>
         <ListItem>
-          <Button variant="contained" fullWidth onClick={handleClickLink('/vote')} data-testid="VOTE"  sx={styles.sideBar}>
+          <Button variant="contained" fullWidth onClick={handleClickLink('/vote')} data-testid="VOTE" sx={styles.sideBar}>
             VOTE
           </Button>
         </ListItem>
         <ListItem>
           <Link to="/breeds">
-            <Button variant="contained"  fullWidth onClick={handleClickLink('/breeds')} data-testid="BREEDS" sx={styles.sideBar}>
+            <Button variant="contained" fullWidth onClick={handleClickLink('/breeds')} data-testid="BREEDS" sx={styles.sideBar}>
               BREEDS
             </Button>
           </Link>

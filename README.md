@@ -30,5 +30,10 @@ Po kliknutí na button close
 
 poitřebujes redux toolkit a axios 
 
+********************************************************************************************************************************************
+27.10.2023
+
+Zeptat se:
+1) proč nepoužil create store ale configureStore? 
 
 
