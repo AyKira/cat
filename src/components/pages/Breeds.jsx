@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Carousel } from 'react-responsive-carousel';
+import React, { useState, useEffect } from 'react';
 import Grid from "@mui/material/Grid";
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
@@ -8,7 +7,7 @@ import axios from 'axios';
 
 function Breeds() {
   const [breeds, setBreeds] = useState([]);
-  const [selectedBreed, setSelectedBreed] = useState('beng'); // Set the default breed ID for Bengal
+  const [selectedBreed, setSelectedBreed] = useState('beng');
   const [breedImage, setBreedImage] = useState('');
   const [breedDescription, setBreedDescription] = useState('');
 
@@ -23,11 +22,9 @@ function Breeds() {
   useEffect(() => {
     const fetchBreedDetails = async () => {
       if (selectedBreed) {
-        // Fetch image
         const imageResponse = await axios.get(`https://api.thecatapi.com/v1/images/search?breed_ids=${selectedBreed}`);
         setBreedImage(imageResponse.data[0]?.url || '');
 
-        // Fetch description
         const breed = breeds.find(breed => breed.id === selectedBreed);
         setBreedDescription(breed?.description || '');
       }
