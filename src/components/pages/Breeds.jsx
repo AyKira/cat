@@ -1,29 +1,69 @@
-import React from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Carousel } from 'react-responsive-carousel';
 import Grid from "@mui/material/Grid";
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
+import axios from 'axios';
 
 function Breeds() {
+  const [breeds, setBreeds] = useState([]);
+  const [selectedBreed, setSelectedBreed] = useState('beng'); // Set the default breed ID for Bengal
+  const [breedImage, setBreedImage] = useState('');
+  const [breedDescription, setBreedDescription] = useState('');
+
+  useEffect(() => {
+    const fetchBreeds = async () => {
+      const response = await axios.get('https://api.thecatapi.com/v1/breeds');
+      setBreeds(response.data);
+    };
+    fetchBreeds();
+  }, []);
+
+  useEffect(() => {
+    const fetchBreedDetails = async () => {
+      if (selectedBreed) {
+        // Fetch image
+        const imageResponse = await axios.get(`https://api.thecatapi.com/v1/images/search?breed_ids=${selectedBreed}`);
+        setBreedImage(imageResponse.data[0]?.url || '');
+
+        // Fetch description
+        const breed = breeds.find(breed => breed.id === selectedBreed);
+        setBreedDescription(breed?.description || '');
+      }
+    };
+
+    fetchBreedDetails();
+  }, [selectedBreed, breeds]);
+
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '20px' }}>
       <Grid item xs={12} md={4}>
         <FormControl sx={{ width: '100%' }}>
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
-            Age
+          <InputLabel variant="standard" htmlFor="breeds-selector">
+            Breeds
           </InputLabel>
           <NativeSelect
-            defaultValue={30}
+            value={selectedBreed}
+            onChange={(e) => setSelectedBreed(e.target.value)}
             inputProps={{
-              name: 'age',
-              id: 'uncontrolled-native',
+              name: 'breed',
+              id: 'breeds-selector',
             }}
           >
-            <option value={10}>Ten</option>
-            <option value={20}>Twenty</option>
-            <option value={30}>Thirty</option>
+            {breeds.map(breed => (
+              <option key={breed.id} value={breed.id}>
+                {breed.name}
+              </option>
+            ))}
           </NativeSelect>
         </FormControl>
+        {selectedBreed && (
+          <div>
+            <img src={breedImage} alt={selectedBreed} style={{ width: '100%', marginTop: '20px' }} />
+            <p>{breedDescription}</p>
+          </div>
+        )}
       </Grid>
     </Grid>
   );
