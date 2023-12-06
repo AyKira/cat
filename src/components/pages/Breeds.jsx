@@ -1,16 +1,20 @@
 // Breeds.jsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
-import Typography from '@mui/material/Typography'; // Import Typography from Material-UI
+import Typography from '@mui/material/Typography';
+import { Carousel } from 'react-responsive-carousel';
 import { selectBreeds, setSelectedBreed, fetchBreeds, fetchBreedDetails } from '../../redux-modules/breedSlice';
+
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 function Breeds() {
   const dispatch = useDispatch();
   const { breeds, selectedBreed, breedName, breedImage, breedDescription } = useSelector(selectBreeds);
+  const [breedImages, setBreedImages] = useState([]);
 
   useEffect(() => {
     dispatch(fetchBreeds());
@@ -19,6 +23,18 @@ function Breeds() {
   useEffect(() => {
     dispatch(fetchBreedDetails(selectedBreed));
   }, [dispatch, selectedBreed]);
+
+  useEffect(() => {
+    const fetchBreedImages = async () => {
+      if (selectedBreed) {
+        const response = await fetch(`https://api.thecatapi.com/v1/images/search?limit=8&breed_id=${selectedBreed}`);
+        const data = await response.json();
+        setBreedImages(data.map((image) => image.url));
+      }
+    };
+
+    fetchBreedImages();
+  }, [selectedBreed]);
 
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '20px' }}>
@@ -45,7 +61,13 @@ function Breeds() {
         {selectedBreed && (
           <Grid container spacing={2} justifyContent="center" alignItems="center">
             <Grid item xs={12}>
-              <img src={breedImage} alt={selectedBreed} style={{ width: '100%', marginTop: '20px' }} />
+              <Carousel showThumbs={false}>
+                {breedImages.map((imageUrl, index) => (
+                  <div key={index}>
+                    <img src={imageUrl} alt={`Breed ${selectedBreed} Image ${index}`} />
+                  </div>
+                ))}
+              </Carousel>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h6">{breedName}</Typography>
@@ -53,6 +75,7 @@ function Breeds() {
             <Grid item xs={12}>
               <Typography variant="body1">{breedDescription}</Typography>
             </Grid>
+
           </Grid>
         )}
       </Grid>
