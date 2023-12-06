@@ -8,6 +8,7 @@ import axios from 'axios';
 function Breeds() {
   const [breeds, setBreeds] = useState([]);
   const [selectedBreed, setSelectedBreed] = useState('beng');
+  const [breedName, setBreedName] = useState('');
   const [breedImage, setBreedImage] = useState('');
   const [breedDescription, setBreedDescription] = useState('');
 
@@ -27,6 +28,9 @@ function Breeds() {
 
         const breed = breeds.find(breed => breed.id === selectedBreed);
         setBreedDescription(breed?.description || '');
+
+        const name = breeds.find(breed => breed.name === selectedBreed);
+        setBreedName(breed?.name || '');
       }
     };
 
@@ -58,6 +62,7 @@ function Breeds() {
         {selectedBreed && (
           <div>
             <img src={breedImage} alt={selectedBreed} style={{ width: '100%', marginTop: '20px' }} />
+            <p>{breedName}</p>
             <p>{breedDescription}</p>
           </div>
         )}

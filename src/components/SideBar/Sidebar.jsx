@@ -51,9 +51,9 @@ function Sidebar({ isOpen, toggleDrawer }) {
           </Link>
         </ListItem>
         <ListItem>
-          <Link to="/image-search">
+          <Link to="/favorites">
             <Button variant="contained" fullWidth onClick={handleClickLink('/image-search')} data-testid="IMAGE/SEARCH" sx={styles.sideBar}>
-              IMAGE/SEARCH
+              FAVORITES
             </Button>
           </Link>
         </ListItem>
