@@ -5,7 +5,7 @@ import Sidebar from "../SideBar/Sidebar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Vote from "../pages/Vote";
 import Breeds from "../pages/Breeds";
-import ImageSearch from "../pages/ImageSearch";
+import Favorites from "../pages/Favorites";
 import Home from "../pages/Home";
 
 function Website() {
@@ -24,7 +24,7 @@ function Website() {
         <Route path="/" element={<Home />} />
         <Route path="/vote" element={<Vote />} />
         <Route path="/breeds" element={<Breeds />} />
-        <Route path="/image-search" element={<ImageSearch />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </BrowserRouter>
   );

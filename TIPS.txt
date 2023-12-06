@@ -3,3 +3,5 @@ screen.debug()
 
 alert:
 onClick={() => alert('mrdko')}
+
+návod na carousel https://codesandbox.io/p/sandbox/react-material-ui-carousel-navigate-with-arrow-keys-example-h6l4h?file=%2Fsrc%2FApp.tsx%3A3%2C1-3%2C55
