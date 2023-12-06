@@ -1,41 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import Grid from "@mui/material/Grid";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
-import axios from 'axios';
+import { selectBreeds, setSelectedBreed, fetchBreeds, fetchBreedDetails } from '../../redux-modules/breedSlice';
 
 function Breeds() {
-  const [breeds, setBreeds] = useState([]);
-  const [selectedBreed, setSelectedBreed] = useState('beng');
-  const [breedName, setBreedName] = useState('');
-  const [breedImage, setBreedImage] = useState('');
-  const [breedDescription, setBreedDescription] = useState('');
+  const dispatch = useDispatch();
+  const { breeds, selectedBreed, breedName, breedImage, breedDescription } = useSelector(selectBreeds);
 
   useEffect(() => {
-    const fetchBreeds = async () => {
-      const response = await axios.get('https://api.thecatapi.com/v1/breeds');
-      setBreeds(response.data);
-    };
-    fetchBreeds();
-  }, []);
+    dispatch(fetchBreeds());
+  }, [dispatch]);
 
   useEffect(() => {
-    const fetchBreedDetails = async () => {
-      if (selectedBreed) {
-        const imageResponse = await axios.get(`https://api.thecatapi.com/v1/images/search?breed_ids=${selectedBreed}`);
-        setBreedImage(imageResponse.data[0]?.url || '');
-
-        const breed = breeds.find(breed => breed.id === selectedBreed);
-        setBreedDescription(breed?.description || '');
-
-        const name = breeds.find(breed => breed.name === selectedBreed);
-        setBreedName(breed?.name || '');
-      }
-    };
-
-    fetchBreedDetails();
-  }, [selectedBreed, breeds]);
+    dispatch(fetchBreedDetails());
+  }, [dispatch, selectedBreed]);
 
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '20px' }}>
@@ -46,7 +27,7 @@ function Breeds() {
           </InputLabel>
           <NativeSelect
             value={selectedBreed}
-            onChange={(e) => setSelectedBreed(e.target.value)}
+            onChange={(e) => dispatch(setSelectedBreed(e.target.value))}
             inputProps={{
               name: 'breed',
               id: 'breeds-selector',
