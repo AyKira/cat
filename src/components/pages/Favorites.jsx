@@ -1,4 +1,4 @@
-// Favorites.jsx
+
 
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 
 const styles = {
   container: {
-    marginTop: '20px', // Adjust the margin as needed
+    marginTop: '20px',
   },
   picture: {
     display: 'block',

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import { randomPictureSlice, randomPictureSliceSelectors } from '../../redux-modules';
 import { fetchRandomPicture } from '../../redux-modules/randomPictureSlice';
 import { savePicture } from '../../redux-modules/randomPictureSlice';
 const styles = {
@@ -21,27 +22,41 @@ const styles = {
   picture: {
     display: 'block',
     margin: '0 auto',
+    maxWidth: '100%',
   },
 };
 
 function Vote() {
   const dispatch = useDispatch();
-  const imageURL = useSelector((state) => state.randomPicture.data);
+
+  const imageURL = useSelector((state) => randomPictureSliceSelectors.getRandomPictureData(state));
+  const isInvalid = useSelector((state) => randomPictureSliceSelectors.getRandomPictureIsInvalid(state));
 
   useEffect(() => {
-    dispatch(fetchRandomPicture());
-  }, [dispatch]);
+    if (imageURL.length === 0) {
+      dispatch(randomPictureSlice.fetchRandomPicture());
+    }
+  }, [dispatch, imageURL]);
+
+  useEffect(() => {
+    if (isInvalid) {
+      dispatch(randomPictureSlice.fetchRandomPicture());
+    }
+  }, [dispatch, isInvalid]);
 
   const handleLoveIt = () => {
-    dispatch(fetchRandomPicture());
+    dispatch(randomPictureSlice.invalidateRandomPicture());
+    /* dispatch(randomPictureSlice.fetchRandomPicture()); */
   };
 
   const handleNopeIt = () => {
-    dispatch(fetchRandomPicture());
+    dispatch(randomPictureSlice.invalidateRandomPicture());
+    /* dispatch(randomPictureSlice.fetchRandomPicture()); */
   }
 
   const handleSaveIt = () => {
     dispatch(savePicture(imageURL));
+    dispatch(randomPictureSlice.fetchRandomPicture());
   }
 
   return (

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const initialState = {
   breeds: [],
-  selectedBreed: 'beng',  // Set the default selected breed if needed
+  selectedBreed: 'beng',
   breedName: '',
   breedImage: '',
   breedDescription: '',
@@ -35,7 +35,7 @@ export const fetchBreeds = () => async (dispatch) => {
     const response = await axios.get('https://api.thecatapi.com/v1/breeds');
     dispatch(setBreeds(response.data));
   } catch (error) {
-    // Handle error if needed
+    
     console.error('Error fetching breeds:', error);
   }
 };
@@ -50,7 +50,7 @@ export const fetchBreedDetails = () => async (dispatch, getState) => {
       dispatch(setBreedDetails(imageResponse.data[0]?.url || ''));
     }
   } catch (error) {
-    // Handle error if needed
+    
     console.error('Error fetching breed details:', error);
   }
 };
