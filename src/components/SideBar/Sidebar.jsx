@@ -1,9 +1,9 @@
-// Sidebar.jsx
+
 import React from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import catSideBat from "../Images/catSideBat.png";
+import catSideBat from "../images/catSideBat.png";
 import Button from "@mui/material/Button";
 import ButtonBase from "@mui/material/ButtonBase";
 import { Link, useNavigate } from "react-router-dom";
@@ -51,9 +51,9 @@ function Sidebar({ isOpen, toggleDrawer }) {
           </Link>
         </ListItem>
         <ListItem>
-          <Link to="/image-search">
+          <Link to="/favorites">
             <Button variant="contained" fullWidth onClick={handleClickLink('/image-search')} data-testid="IMAGE/SEARCH" sx={styles.sideBar}>
-              IMAGE/SEARCH
+              FAVORITES
             </Button>
           </Link>
         </ListItem>

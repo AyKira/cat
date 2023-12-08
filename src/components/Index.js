@@ -3,7 +3,7 @@ import SideBar from "./SideBar/Sidebar";
 import Website from "./Website/Website";
 import Vote from "./pages/Vote";
 import Breeds from "./pages/Breeds";
-import ImageSearch from "./pages/ImageSearch";
+import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
 
-export { AppBar, SideBar, Website, Vote, Breeds, ImageSearch, Home };
+export { AppBar, SideBar, Website, Vote, Breeds, Favorites, Home };

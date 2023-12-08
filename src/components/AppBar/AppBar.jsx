@@ -1,9 +1,9 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import catLogo from "../Images/catLogo.png";
-import catLogoMirror from "../Images/catLogoMirror.png";
-import catMiddle from "../Images/catMiddle.png";
+import catLogo from "../images/catLogo.png";
+import catLogoMirror from "../images/catLogoMirror.png";
+import catMiddle from "../images/catMiddle.png"
 
 const styles = {
   appBar: {

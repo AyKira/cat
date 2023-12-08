@@ -1,37 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import Grid from "@mui/material/Grid";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
-import axios from 'axios';
+import Typography from '@mui/material/Typography';
+import { Carousel } from 'react-responsive-carousel';
+import { selectBreeds, setSelectedBreed, fetchBreeds, fetchBreedDetails } from '../../redux-modules/breedSlice';
+
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 function Breeds() {
-  const [breeds, setBreeds] = useState([]);
-  const [selectedBreed, setSelectedBreed] = useState('beng');
-  const [breedImage, setBreedImage] = useState('');
-  const [breedDescription, setBreedDescription] = useState('');
+  const dispatch = useDispatch();
+  const { breeds, selectedBreed, breedName, breedImage, breedDescription } = useSelector(selectBreeds);
+  const [breedImages, setBreedImages] = useState([]);
 
   useEffect(() => {
-    const fetchBreeds = async () => {
-      const response = await axios.get('https://api.thecatapi.com/v1/breeds');
-      setBreeds(response.data);
-    };
-    fetchBreeds();
-  }, []);
+    dispatch(fetchBreeds());
+  }, [dispatch]);
 
   useEffect(() => {
-    const fetchBreedDetails = async () => {
+    dispatch(fetchBreedDetails(selectedBreed));
+  }, [dispatch, selectedBreed]);
+
+  useEffect(() => {
+    const fetchBreedImages = async () => {
       if (selectedBreed) {
-        const imageResponse = await axios.get(`https://api.thecatapi.com/v1/images/search?breed_ids=${selectedBreed}`);
-        setBreedImage(imageResponse.data[0]?.url || '');
-
-        const breed = breeds.find(breed => breed.id === selectedBreed);
-        setBreedDescription(breed?.description || '');
+        const response = await fetch(`https://api.thecatapi.com/v1/images/search?limit=8&breed_id=${selectedBreed}`);
+        const data = await response.json();
+        setBreedImages(data.map((image) => image.url));
       }
     };
 
-    fetchBreedDetails();
-  }, [selectedBreed, breeds]);
+    fetchBreedImages();
+  }, [selectedBreed]);
 
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '20px' }}>
@@ -42,7 +44,7 @@ function Breeds() {
           </InputLabel>
           <NativeSelect
             value={selectedBreed}
-            onChange={(e) => setSelectedBreed(e.target.value)}
+            onChange={(e) => dispatch(setSelectedBreed(e.target.value))}
             inputProps={{
               name: 'breed',
               id: 'breeds-selector',
@@ -56,10 +58,24 @@ function Breeds() {
           </NativeSelect>
         </FormControl>
         {selectedBreed && (
-          <div>
-            <img src={breedImage} alt={selectedBreed} style={{ width: '100%', marginTop: '20px' }} />
-            <p>{breedDescription}</p>
-          </div>
+          <Grid container spacing={2} justifyContent="center" alignItems="center">
+            <Grid item xs={12}>
+              <Carousel showThumbs={false}>
+                {breedImages.map((imageUrl, index) => (
+                  <div key={index}>
+                    <img src={imageUrl} alt={`Breed ${selectedBreed} Image ${index}`} />
+                  </div>
+                ))}
+              </Carousel>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">{breedName}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="body1">{breedDescription}</Typography>
+            </Grid>
+
+          </Grid>
         )}
       </Grid>
     </Grid>
