@@ -33,11 +33,13 @@ function Vote() {
   const isInvalid = useSelector((state) => randomPictureSliceSelectors.getRandomPictureIsInvalid(state));
 
   useEffect(() => {
-    dispatch(randomPictureSlice.fetchRandomPicture());
-  }, [dispatch]);
+    if (imageURL.length === 0) { //tohle tady musí bejt jinak se mi bude getovat nový obrazek po každém otevření stránky
+      dispatch(randomPictureSlice.fetchRandomPicture());
+    }
+  }, [dispatch, imageURL]);
 
   useEffect(() => {
-    if (isInvalid) {
+    if (isInvalid) {  // k čemu je tohle dobrý?
       dispatch(randomPictureSlice.fetchRandomPicture());
     }
   }, [dispatch, isInvalid]);
