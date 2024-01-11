@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { randomPictureSlice, randomPictureSliceSelectors } from '../../redux-modules';
-import { fetchRandomPicture } from '../../redux-modules/randomPictureSlice';
-import { savePicture } from '../../redux-modules/randomPictureSlice';
+
 const styles = {
   buttons1: {
     backgroundColor: 'green',
@@ -46,16 +45,16 @@ function Vote() {
 
   const handleLoveIt = () => {
     dispatch(randomPictureSlice.invalidateRandomPicture());
-    /* dispatch(randomPictureSlice.fetchRandomPicture()); */
+    dispatch(randomPictureSlice.votePicture({ imageId: imageURL[0]?.id, value: 1 }));
   };
 
   const handleNopeIt = () => {
     dispatch(randomPictureSlice.invalidateRandomPicture());
-    /* dispatch(randomPictureSlice.fetchRandomPicture()); */
-  }
+    dispatch(randomPictureSlice.votePicture({ imageId: imageURL[0]?.id, value: -1 }));
+  };
 
   const handleSaveIt = () => {
-    dispatch(savePicture(imageURL));
+    dispatch(randomPictureSlice.savePicture(imageURL));
     dispatch(randomPictureSlice.fetchRandomPicture());
   }
 
