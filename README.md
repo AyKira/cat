@@ -43,4 +43,4 @@ Zeptat se:
 ********************************************************************************************************************************************
 12.1.2024 
 - jak to že nemusel importovat nic do toho selectoru
-- zeptat se na invalidateRandomPicture  
+- zeptat se na invalidateRandomPicture    
