@@ -15,11 +15,18 @@ export const fetchRandomPicture = createAsyncThunk(
           },
         }
       );
+
       if (response.data.length > 0) {
-        const imageUrl = response.data[0].url;
-        return imageUrl;
+        const imageUrl = response.data[0].url; // // tady dostanu url z getu
+        const imageId = response.data[0].id; // tady dostanu id z getu
+
+        console.log('URL:', imageUrl);
+        console.log('ID:', imageId);
+
+        return { imageUrl, imageId };
       }
     } catch (error) {
+      console.error('Fetch Random Picture Error:', error);
       throw error;
     }
   }
@@ -34,11 +41,13 @@ export const votePicture = createAsyncThunk(
   'randomPicture/votePicture',
   async ({ imageId, value }) => {
     try {
-       await axios.post(
+      console.log('Vote Picture: imageId', imageId); 
+      console.log('Vote Picture: value', value);
+
+      const response = await axios.post(
         'https://api.thecatapi.com/v1/votes',
         {
           image_id: imageId,
-          sub_id: null,
           value: value,
         },
         {
@@ -63,7 +72,10 @@ export const savePicture = createAsyncThunk(
 const randomPictureSlice = createSlice({
   name: "randomPicture",
   initialState: {
-    data: [],
+    data: {
+      imageUrl: "",
+      imageId: "",
+    },
     isFetching: false,
     didInvalidate: false,
     error: null,
@@ -77,7 +89,10 @@ const randomPictureSlice = createSlice({
       })
       .addCase(fetchRandomPicture.fulfilled, (state, action) => {
         state.isFetching = false;
-        state.data = action.payload;
+        state.data = {
+          imageUrl: action.payload.imageUrl,
+          imageId: action.payload.imageId,
+        };
         state.didInvalidate = false;
       })
       .addCase(fetchRandomPicture.rejected, (state, action) => {

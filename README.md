@@ -40,4 +40,6 @@ poitřebujes redux toolkit a axios
 Zeptat se:
 1) proč nepoužil create store ale configureStore? 
 
-
+********************************************************************************************************************************************
+12.1.2024 
+jak to že nemusel importovat nic do toho selectoru
