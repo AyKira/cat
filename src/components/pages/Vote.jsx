@@ -28,14 +28,13 @@ const styles = {
 function Vote() {
   const dispatch = useDispatch();
 
-  const imageURL = useSelector((state) => randomPictureSliceSelectors.getRandomPictureData(state));
+  const imageURL = useSelector((state) => randomPictureSliceSelectors.getRandomPictureData(state).imageUrl);
+  const imageId = useSelector((state) => randomPictureSliceSelectors.getRandomPictureData(state).imageId);
   const isInvalid = useSelector((state) => randomPictureSliceSelectors.getRandomPictureIsInvalid(state));
 
   useEffect(() => {
-    if (imageURL.length === 0) {
-      dispatch(randomPictureSlice.fetchRandomPicture());
-    }
-  }, [dispatch, imageURL]);
+    dispatch(randomPictureSlice.fetchRandomPicture());
+  }, [dispatch]);
 
   useEffect(() => {
     if (isInvalid) {
@@ -45,12 +44,12 @@ function Vote() {
 
   const handleLoveIt = () => {
     dispatch(randomPictureSlice.invalidateRandomPicture());
-    dispatch(randomPictureSlice.votePicture({ imageId: imageURL[0]?.id, value: 1 }));
+    dispatch(randomPictureSlice.votePicture({ imageId, value: 1 }));
   };
 
   const handleNopeIt = () => {
     dispatch(randomPictureSlice.invalidateRandomPicture());
-    dispatch(randomPictureSlice.votePicture({ imageId: imageURL[0]?.id, value: -1 }));
+    dispatch(randomPictureSlice.votePicture({ imageId, value: -1 }));
   };
 
   const handleSaveIt = () => {
