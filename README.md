@@ -42,4 +42,5 @@ Zeptat se:
 
 ********************************************************************************************************************************************
 12.1.2024 
-jak to že nemusel importovat nic do toho selectoru
+- jak to že nemusel importovat nic do toho selectoru
+- zeptat se na invalidateRandomPicture  
