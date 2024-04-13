@@ -7,6 +7,7 @@ const initialState = {
   breedName: '',
   breedImage: '',
   breedDescription: '',
+  breedImages: [],  
 };
 
 export const breedSlice = createSlice({
@@ -23,7 +24,7 @@ export const breedSlice = createSlice({
       const breed = state.breeds.find(b => b.id === state.selectedBreed);
       state.breedName = breed?.name || '';
       state.breedDescription = breed?.description || '';
-      state.breedImage = action.payload;
+      state.breedImages = action.payload || []; 
     },
   },
 });
@@ -34,23 +35,23 @@ export const fetchBreeds = () => async (dispatch) => {
   try {
     const response = await axios.get('https://api.thecatapi.com/v1/breeds');
     dispatch(setBreeds(response.data));
+    return Promise.resolve();
   } catch (error) {
-    
     console.error('Error fetching breeds:', error);
+    return Promise.reject();
   }
 };
 
-export const fetchBreedDetails = () => async (dispatch, getState) => {
+export const fetchBreedDetails = (breedId) => async (dispatch, getState) => {
   try {
     const state = getState();
-    const selectedBreed = state.breeds.selectedBreed;
-
+    const selectedBreed = breedId || state.breeds.selectedBreed;
+    
     if (selectedBreed) {
-      const imageResponse = await axios.get(`https://api.thecatapi.com/v1/images/search?breed_ids=${selectedBreed}`);
-      dispatch(setBreedDetails(imageResponse.data[0]?.url || ''));
+      const imageResponse = await axios.get(`https://api.thecatapi.com/v1/images/search?limit=8&breed_id=${selectedBreed}`);
+      dispatch(setBreedDetails(imageResponse.data.map(img => img.url)));  
     }
   } catch (error) {
-    
     console.error('Error fetching breed details:', error);
   }
 };

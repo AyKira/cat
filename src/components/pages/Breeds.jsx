@@ -12,28 +12,20 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 function Breeds() {
   const dispatch = useDispatch();
-  const { breeds, selectedBreed, breedName, breedImage, breedDescription } = useSelector(selectBreeds);
-  const [breedImages, setBreedImages] = useState([]);
+  const { breeds, selectedBreed, breedName, breedImages, breedDescription } = useSelector(selectBreeds);
+
+
+
 
   useEffect(() => {
-    dispatch(fetchBreeds());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchBreedDetails(selectedBreed));
+    dispatch(fetchBreeds()).then(() => {
+      dispatch(fetchBreedDetails());
+    });
   }, [dispatch, selectedBreed]);
 
-  useEffect(() => {
-    const fetchBreedImages = async () => {
-      if (selectedBreed) {
-        const response = await fetch(`https://api.thecatapi.com/v1/images/search?limit=8&breed_id=${selectedBreed}`);
-        const data = await response.json();
-        setBreedImages(data.map((image) => image.url));
-      }
-    };
 
-    fetchBreedImages();
-  }, [selectedBreed]);
+
+
 
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '20px' }}>
