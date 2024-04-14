@@ -1,23 +1,22 @@
+// Website.jsx
 import React, { useState } from "react";
-import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "../AppBar/AppBar";
 import Sidebar from "../SideBar/Sidebar";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Vote from "../pages/Vote";
 import Breeds from "../pages/Breeds";
 import Favorites from "../pages/Favorites";
 import Home from "../pages/Home";
 
-function Website() {
+function Website({ useInternalRouter = true }) {
   const [isOpen, setIsOpen] = useState(false);
 
   function toggleDrawer() {
     setIsOpen(!isOpen);
   }
 
-  return (
-    <BrowserRouter>
-      <CssBaseline />
+  const content = (
+    <>
       <AppBar toggleDrawer={toggleDrawer} />
       <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer} />
       <Routes>
@@ -26,8 +25,10 @@ function Website() {
         <Route path="/breeds" element={<Breeds />} />
         <Route path="/favorites" element={<Favorites />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
+
+  return useInternalRouter ? (<BrowserRouter>{content}</BrowserRouter>) : (content);
 }
 
 export default Website;

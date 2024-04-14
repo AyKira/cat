@@ -32,29 +32,27 @@ function Vote() {
   const imageId = useSelector((state) => randomPictureSliceSelectors.getRandomPictureData(state).imageId);
   const isInvalid = useSelector((state) => randomPictureSliceSelectors.getRandomPictureIsInvalid(state));
 
-  useEffect(() => {
-    if (imageURL.length === 0) { //tohle tady musí bejt jinak se mi bude getovat nový obrazek po každém otevření stránky
-      dispatch(randomPictureSlice.fetchRandomPicture());
-    }
-  }, [dispatch, imageURL]);
+
 
   useEffect(() => {
-    if (isInvalid) {  // k čemu je tohle dobrý?
+    if (imageURL.length === 0 || isInvalid) {
       dispatch(randomPictureSlice.fetchRandomPicture());
     }
-  }, [dispatch, isInvalid]);
+  }, [dispatch, imageURL, isInvalid]);
 
-  const handleLoveIt = () => {
+
+
+  function handleLoveIt() {
     dispatch(randomPictureSlice.invalidateRandomPicture());
     dispatch(randomPictureSlice.votePicture({ imageId, value: 1 }));
   };
 
-  const handleNopeIt = () => {
+  function handleNopeIt() {
     dispatch(randomPictureSlice.invalidateRandomPicture());
     dispatch(randomPictureSlice.votePicture({ imageId, value: -1 }));
   };
 
-  const handleSaveIt = () => {
+  function handleSaveIt() {
     dispatch(randomPictureSlice.savePicture(imageURL));
     dispatch(randomPictureSlice.fetchRandomPicture());
   }

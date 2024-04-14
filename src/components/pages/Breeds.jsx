@@ -21,7 +21,7 @@ function Breeds() {
     dispatch(fetchBreeds()).then(() => {
       dispatch(fetchBreedDetails());
     });
-  }, [dispatch, selectedBreed]);
+  }, [selectedBreed]);
 
 
 
