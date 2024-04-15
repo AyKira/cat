@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import { randomPictureSlice, randomPictureSliceSelectors } from '../../redux-modules';
+import { fetchRandomPicture, invalidateRandomPicture, savePicture, votePicture } from '../../redux-modules/randomPictureSlice';
+import { getRandomPictureData } from '../../redux-modules/randomPictureSliceSelectors';
+
 
 const styles = {
   buttons1: {
@@ -26,35 +28,34 @@ const styles = {
 };
 
 function Vote() {
+
+  //useSelector
+  const { imageUrl, imageId } = useSelector(getRandomPictureData);
+
+  //const
   const dispatch = useDispatch();
 
-  const imageURL = useSelector((state) => randomPictureSliceSelectors.getRandomPictureData(state).imageUrl);
-  const imageId = useSelector((state) => randomPictureSliceSelectors.getRandomPictureData(state).imageId);
-  const isInvalid = useSelector((state) => randomPictureSliceSelectors.getRandomPictureIsInvalid(state));
-
-
-
+  //useEffect
   useEffect(() => {
-    if (imageURL.length === 0 || isInvalid) {
-      dispatch(randomPictureSlice.fetchRandomPicture());
+    if (imageUrl.length === 0) {
+      dispatch(fetchRandomPicture());
     }
-  }, [dispatch, imageURL, isInvalid]);
+  }, [dispatch]);
 
-
-
+  //functions
   function handleLoveIt() {
-    dispatch(randomPictureSlice.invalidateRandomPicture());
-    dispatch(randomPictureSlice.votePicture({ imageId, value: 1 }));
+    dispatch(votePicture({ imageId, value: 1 }));
+    dispatch(fetchRandomPicture());
   };
 
   function handleNopeIt() {
-    dispatch(randomPictureSlice.invalidateRandomPicture());
-    dispatch(randomPictureSlice.votePicture({ imageId, value: -1 }));
+    dispatch(votePicture({ imageId, value: -1 }));
+    dispatch(fetchRandomPicture());
   };
 
   function handleSaveIt() {
-    dispatch(randomPictureSlice.savePicture(imageURL));
-    dispatch(randomPictureSlice.fetchRandomPicture());
+    dispatch(savePicture(imageUrl));
+    dispatch(fetchRandomPicture());
   }
 
   return (
@@ -84,7 +85,7 @@ function Vote() {
       </Grid>
       <Grid item xs={2}>
         <img
-          src={imageURL}
+          src={imageUrl}
           alt="Random Cat"
           style={styles.picture}
         />

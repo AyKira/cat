@@ -18,6 +18,7 @@ function Breeds() {
   const dispatch = useDispatch();
 
   //selector
+  // const breeds = useSelector(store) => store.breeds.breeds;
   const breeds = useSelector(getBreeds);
   const breedDescription = useSelector(getBreedDescription);
   const breedImages = useSelector(getBreedImages);

@@ -3,6 +3,9 @@ import axios from 'axios';
 
 const API_KEY = 'live_FA7y0B4u6c3oj56PDR8IQw29gZhL6lcHEgqmez4Z4Pcyhj2u6iHoQc7T9F18J21X';
 
+
+
+// fetch random picture
 export const fetchRandomPicture = createAsyncThunk(
   'randomPicture/fetchRandomPicture',
   async () => {
@@ -17,8 +20,8 @@ export const fetchRandomPicture = createAsyncThunk(
       );
 
       if (response.data.length > 0) {
-        const imageUrl = response.data[0].url; // // tady dostanu url z getu
-        const imageId = response.data[0].id; // tady dostanu id z getu
+        const imageUrl = response.data[0].url; 
+        const imageId = response.data[0].id; 
         return { imageUrl, imageId };
       }
     } catch (error) {
@@ -33,6 +36,7 @@ export const invalidateRandomPicture = createAsyncThunk(
   async () => Promise.resolve()
 );
 
+// vote for  picture
 export const votePicture = createAsyncThunk(
   'randomPicture/votePicture',
   async ({ imageId, value }) => {
@@ -54,6 +58,8 @@ export const votePicture = createAsyncThunk(
   }
 );
 
+
+
 export const savePicture = createAsyncThunk(
   'randomPicture/savePicture',
   async (imageUrl) => {
@@ -61,52 +67,55 @@ export const savePicture = createAsyncThunk(
   }
 );
 
+
+const initialState = {
+  data: {
+    imageUrl: "",
+    imageId: "",
+  },
+  isFetching: false,
+  didInvalidate: false,
+  error: null,
+  savedUrls: [],
+};
+
 const randomPictureSlice = createSlice({
   name: "randomPicture",
-  initialState: {
-    data: {
-      imageUrl: "",
-      imageId: "",
-    },
-    isFetching: false,
-    didInvalidate: false,
-    error: null,
-    savedUrls: [],
-  },
+  initialState,
  
-  extraReducers: {
-    [fetchRandomPicture.pending]: (state) => {
-      state.isFetching = true;
-    },
-    [fetchRandomPicture.fulfilled]: (state, action) => {
-      state.isFetching = false;
-      state.data = {
-        imageUrl: action.payload.imageUrl,
-        imageId: action.payload.imageId,
-      };
-      state.didInvalidate = false;
-    },
-    [fetchRandomPicture.rejected]: (state, action) => {
-      state.isFetching = false;
-      state.error = action.error.message;
-    },
-    [savePicture.fulfilled]: (state, action) => {
-      state.savedUrls.push(action.payload);
-    },
-    [invalidateRandomPicture.fulfilled]: (state) => {
-      state.didInvalidate = true;
-    },
-    [votePicture.pending]: (state) => {
-      state.isFetching = true;
-    },
-    [votePicture.fulfilled]: (state) => {
-      state.isFetching = false;
-    },
-    [votePicture.rejected]: (state, action) => {
-      state.error = action.error.message;
-    },
-  },
-  
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchRandomPicture.pending, (state) => {
+        state.isFetching = true;
+      })
+      .addCase(fetchRandomPicture.fulfilled, (state, action) => {
+        state.isFetching = false;
+        state.data = {
+          imageUrl: action.payload.imageUrl,
+          imageId: action.payload.imageId,
+        };
+        state.didInvalidate = false;
+      })
+      .addCase(fetchRandomPicture.rejected, (state, action) => {
+        state.isFetching = false;
+        state.error = action.error.message;
+      })
+      .addCase(savePicture.fulfilled, (state, action) => {
+        state.savedUrls.push(action.payload);
+      })
+      .addCase(invalidateRandomPicture.fulfilled, (state) => {
+        state.didInvalidate = true;
+      })
+      .addCase(votePicture.pending, (state) => {
+        state.isFetching = true;
+      })
+      .addCase(votePicture.fulfilled, (state) => {
+        state.isFetching = false;
+      })
+      .addCase(votePicture.rejected, (state, action) => {
+        state.error = action.error.message;
+      });
+  }
 });
 
 

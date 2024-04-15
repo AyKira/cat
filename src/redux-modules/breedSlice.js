@@ -35,6 +35,8 @@ const initialState = {
   breedImage: '',
   breedDescription: '',
   breedImages: [],
+  isFetching: false,
+  error: null,
 };
 
 export const breedSlice = createSlice({
@@ -45,32 +47,33 @@ export const breedSlice = createSlice({
       state.selectedBreed = action.payload;
     },
   },
-  extraReducers: {
-    [fetchListOfBreeds.pending]: (state) => {
-      state.loading = true;
-    },
-    [fetchListOfBreeds.fulfilled]: (state, action) => {
-      state.breeds = action.payload;
-      state.loading = false;
-    },
-    [fetchListOfBreeds.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    [fetchSelectedBreed.pending]: (state) => {
-      state.loading = true;
-    },
-    [fetchSelectedBreed.fulfilled]: (state, action) => {
-      const breed = state.breeds.find(b => b.id === state.selectedBreed);
-      state.breedName = breed?.name || '';
-      state.breedDescription = breed?.description || '';
-      state.breedImages = action.payload;
-      state.loading = false;
-    },
-    [fetchSelectedBreed.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchListOfBreeds.pending, (state) => {
+        state.isFetching = true;
+      })
+      .addCase(fetchListOfBreeds.fulfilled, (state, action) => {
+        state.breeds = action.payload;
+        state.isFetching = false;
+      })
+      .addCase(fetchListOfBreeds.rejected, (state, action) => {
+        state.isFetching = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchSelectedBreed.pending, (state) => {
+        state.isFetching = true;
+      })
+      .addCase(fetchSelectedBreed.fulfilled, (state, action) => {
+        const breed = state.breeds.find(b => b.id === state.selectedBreed);
+        state.breedName = breed?.name || '';
+        state.breedDescription = breed?.description || '';
+        state.breedImages = action.payload;
+        state.isFetching = false;
+      })
+      .addCase(fetchSelectedBreed.rejected, (state, action) => {
+        state.isFetching = false;
+        state.error = action.payload;
+      });
   }
 });
 
