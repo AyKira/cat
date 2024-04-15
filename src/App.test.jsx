@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Website from "./Website";
+import App from "./App";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ test('Drawer toggles visibility correctly', async () => {
 
 });
 
-// Website.test.jsx
+// App.test.jsx
 
 
 test('navigates to /vote', async () => {
@@ -38,7 +38,7 @@ test('navigates to /vote', async () => {
   //nechapu pro4 se to to tadz sekne na provideru
   render(
     <MemoryRouter initialEntries={['/']}>
-      <Website useInternalRouter={false} />
+      <App useInternalRouter={false} />
     </MemoryRouter>
   );
 

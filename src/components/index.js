@@ -1,6 +1,6 @@
 import AppBar from "./AppBar/AppBar";
 import SideBar from "./SideBar/Sidebar";
-import Website from "./Website/Website";
+import Website from "../Website";
 import Vote from "./pages/Vote";
 import Breeds from "./pages/Breeds";
 import Favorites from "./pages/Favorites";

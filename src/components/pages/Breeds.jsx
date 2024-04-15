@@ -24,7 +24,10 @@ function Breeds() {
   }, [selectedBreed]);
 
 
-
+  const style = {
+    width: 'auto',
+    height: '300px'
+  };
 
 
   return (
@@ -55,7 +58,7 @@ function Breeds() {
               <Carousel showThumbs={false}>
                 {breedImages.map((imageUrl, index) => (
                   <div key={index}>
-                    <img src={imageUrl} alt={`Breed ${selectedBreed} Image ${index}`} />
+                    <img src={imageUrl} style={style} alt={`Breed ${selectedBreed} Image ${index}`} />
                   </div>
                 ))}
               </Carousel>
