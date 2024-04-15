@@ -6,24 +6,33 @@ import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
 import Typography from '@mui/material/Typography';
 import { Carousel } from 'react-responsive-carousel';
-import { selectBreeds, setSelectedBreed, fetchBreeds, fetchBreedDetails } from '../../redux-modules/breedSlice';
-
+import { setSelectedBreed, fetchListOfBreeds, fetchSelectedBreed } from '../../redux-modules/breedSlice';
+import { getBreeds, getBreedDescription, getBreedImages, getBreedName, getSelectedBreed } from '../../redux-modules/breedSliceSelector';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
+
+
 function Breeds() {
+
+  //const
   const dispatch = useDispatch();
-  const { breeds, selectedBreed, breedName, breedImages, breedDescription } = useSelector(selectBreeds);
 
+  //selector
+  const breeds = useSelector(getBreeds);
+  const breedDescription = useSelector(getBreedDescription);
+  const breedImages = useSelector(getBreedImages);
+  const breedName = useSelector(getBreedName);
+  const selectedBreed = useSelector(getSelectedBreed);
 
-
-
+  //useEffect
   useEffect(() => {
-    dispatch(fetchBreeds()).then(() => {
-      dispatch(fetchBreedDetails());
+    dispatch(fetchListOfBreeds()).then(() => {
+      dispatch(fetchSelectedBreed());
     });
   }, [selectedBreed]);
 
 
+  //style
   const style = {
     width: 'auto',
     height: '300px'

@@ -1,18 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const initialState = {
-  breeds: [],
-  selectedBreed: 'beng',
-  breedName: '',
-  breedImage: '',
-  breedDescription: '',
-  breedImages: [],
-};
-
-// list of breeds
-export const fetchBreeds = createAsyncThunk(
-  'breeds/fetchBreeds',
+// list of all breeds
+export const fetchListOfBreeds = createAsyncThunk(
+  'breeds/fetchListOfBreeds',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
@@ -24,8 +15,8 @@ export const fetchBreeds = createAsyncThunk(
 );
 
 // pictures and details of a cat
-export const fetchBreedDetails = createAsyncThunk(
-  'breeds/fetchBreedDetails',
+export const fetchSelectedBreed = createAsyncThunk(
+  'breeds/fetchSelectedBreed',
   async (breedId, { getState, rejectWithValue }) => {
     try {
       const selectedBreed = breedId || getState().breeds.selectedBreed;
@@ -37,6 +28,15 @@ export const fetchBreedDetails = createAsyncThunk(
   }
 );
 
+const initialState = {
+  breeds: [],
+  selectedBreed: 'beng',
+  breedName: '',
+  breedImage: '',
+  breedDescription: '',
+  breedImages: [],
+};
+
 export const breedSlice = createSlice({
   name: 'breeds',
   initialState,
@@ -46,28 +46,28 @@ export const breedSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchBreeds.pending]: (state) => {
+    [fetchListOfBreeds.pending]: (state) => {
       state.loading = true;
     },
-    [fetchBreeds.fulfilled]: (state, action) => {
+    [fetchListOfBreeds.fulfilled]: (state, action) => {
       state.breeds = action.payload;
       state.loading = false;
     },
-    [fetchBreeds.rejected]: (state, action) => {
+    [fetchListOfBreeds.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
-    [fetchBreedDetails.pending]: (state) => {
+    [fetchSelectedBreed.pending]: (state) => {
       state.loading = true;
     },
-    [fetchBreedDetails.fulfilled]: (state, action) => {
+    [fetchSelectedBreed.fulfilled]: (state, action) => {
       const breed = state.breeds.find(b => b.id === state.selectedBreed);
       state.breedName = breed?.name || '';
       state.breedDescription = breed?.description || '';
       state.breedImages = action.payload;
       state.loading = false;
     },
-    [fetchBreedDetails.rejected]: (state, action) => {
+    [fetchSelectedBreed.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
@@ -76,6 +76,5 @@ export const breedSlice = createSlice({
 
 export const { setSelectedBreed } = breedSlice.actions;
 
-export const selectBreeds = (state) => state.breeds;
 
 export default breedSlice.reducer;
