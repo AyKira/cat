@@ -3,4 +3,5 @@
     const getRandomPictureSelector = (state) => state.randomPicture;
 
     export const getRandomPictureData = createSelector(getRandomPictureSelector,(randomPicture) => randomPicture.data);
+    export const getRandomPictureSavedUrls = createSelector(getRandomPictureSelector,(randomPicture) => randomPicture.savedUrls);
 
