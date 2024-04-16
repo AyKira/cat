@@ -31,10 +31,7 @@ export const fetchRandomPicture = createAsyncThunk(
   }
 );
 
-export const invalidateRandomPicture = createAsyncThunk(
-  'randomPicture/invalidate',
-  async () => Promise.resolve()
-);
+
 
 // vote for  picture
 export const votePicture = createAsyncThunk(
@@ -62,8 +59,9 @@ export const votePicture = createAsyncThunk(
 
 export const savePicture = createAsyncThunk(
   'randomPicture/savePicture',
-  async (imageUrl) => {
-    return imageUrl;
+  (_, store) => {
+    const imageUrl = store.getState().randomPicture.data.imageUrl;
+    return imageUrl; 
   }
 );
 
@@ -94,18 +92,12 @@ const randomPictureSlice = createSlice({
           imageUrl: action.payload.imageUrl,
           imageId: action.payload.imageId,
         };
-        state.didInvalidate = false;
       })
       .addCase(fetchRandomPicture.rejected, (state, action) => {
         state.isFetching = false;
         state.error = action.error.message;
       })
-      .addCase(savePicture.fulfilled, (state, action) => {
-        state.savedUrls.push(action.payload);
-      })
-      .addCase(invalidateRandomPicture.fulfilled, (state) => {
-        state.didInvalidate = true;
-      })
+     
       .addCase(votePicture.pending, (state) => {
         state.isFetching = true;
       })
@@ -114,7 +106,11 @@ const randomPictureSlice = createSlice({
       })
       .addCase(votePicture.rejected, (state, action) => {
         state.error = action.error.message;
+      })
+      .addCase(savePicture.fulfilled, (state, action) => {
+        state.savedUrls.push(action.payload);
       });
+
   }
 });
 

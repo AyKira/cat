@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import { fetchRandomPicture, invalidateRandomPicture, savePicture, votePicture } from '../../redux-modules/randomPictureSlice';
+import { fetchRandomPicture, savePicture, votePicture } from '../../redux-modules/randomPictureSlice';
 import { getRandomPictureData } from '../../redux-modules/randomPictureSliceSelectors';
 
 
@@ -54,7 +54,7 @@ function Vote() {
   };
 
   function handleSaveIt() {
-    dispatch(savePicture(imageUrl));
+    dispatch(savePicture());
     dispatch(fetchRandomPicture());
   }
 
