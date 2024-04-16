@@ -57,14 +57,6 @@ export const votePicture = createAsyncThunk(
 
 
 
-export const savePicture = createAsyncThunk(
-  'randomPicture/savePicture',
-  (_, store) => {
-    const imageUrl = store.getState().randomPicture.data.imageUrl;
-    return imageUrl; 
-  }
-);
-
 
 const initialState = {
   data: {
@@ -80,6 +72,14 @@ const initialState = {
 const randomPictureSlice = createSlice({
   name: "randomPicture",
   initialState,
+  reducers: {
+ 
+    savePicture(state) {
+      if (state.data.imageUrl) { 
+        state.savedUrls.push(state.data.imageUrl);
+      }
+    },
+  },
  
   extraReducers: (builder) => {
     builder
@@ -106,13 +106,11 @@ const randomPictureSlice = createSlice({
       })
       .addCase(votePicture.rejected, (state, action) => {
         state.error = action.error.message;
-      })
-      .addCase(savePicture.fulfilled, (state, action) => {
-        state.savedUrls.push(action.payload);
       });
+   
 
   }
 });
 
-
+export const { savePicture } = randomPictureSlice.actions;
 export default randomPictureSlice.reducer;
