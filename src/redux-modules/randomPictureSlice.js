@@ -59,14 +59,14 @@ export const votePicture = createAsyncThunk(
 
 
 const initialState = {
+  isFetching: false,
+  error: null,
   data: {
     imageUrl: "",
     imageId: "",
+    savedUrls: []
   },
-  isFetching: false,
-  didInvalidate: false,
-  error: null,
-  savedUrls: [],
+
 };
 
 const randomPictureSlice = createSlice({
@@ -75,9 +75,7 @@ const randomPictureSlice = createSlice({
   reducers: {
  
     savePicture(state) {
-      if (state.data.imageUrl) { 
-        state.savedUrls.push(state.data.imageUrl);
-      }
+        state.data.savedUrls.push(state.data.imageUrl);
     },
   },
  
@@ -88,10 +86,10 @@ const randomPictureSlice = createSlice({
       })
       .addCase(fetchRandomPicture.fulfilled, (state, action) => {
         state.isFetching = false;
-        state.data = {
-          imageUrl: action.payload.imageUrl,
-          imageId: action.payload.imageId,
-        };
+        
+        state.data.imageUrl = action.payload.imageUrl;
+        state.data.imageId = action.payload.imageId;
+
       })
       .addCase(fetchRandomPicture.rejected, (state, action) => {
         state.isFetching = false;
