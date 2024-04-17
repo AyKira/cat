@@ -18,7 +18,6 @@ function Breeds() {
   const dispatch = useDispatch();
 
   //selector
-  // const breeds = useSelector(store) => store.breeds.breeds;
   const { breeds, breedDescription, breedImages, breedName, selectedBreed } = useSelector(getBreedData);
 
 
@@ -38,21 +37,17 @@ function Breeds() {
   };
 
 
+
+
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '20px' }}>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={6} >
         <FormControl sx={{ width: '100%' }}>
-          <InputLabel variant="standard" htmlFor="breeds-selector">
+          <InputLabel htmlFor="breeds-selector">
             Breeds
           </InputLabel>
           <NativeSelect
-            value={selectedBreed}
-            onChange={(e) => dispatch(inputBreed(e.target.value))}
-            inputProps={{
-              name: 'breed',
-              id: 'breeds-selector',
-            }}
-          >
+            value={selectedBreed} onChange={(e) => dispatch(inputBreed(e.target.value))} id="breeds-selector">
             {breeds.map(breed => (
               <option key={breed.id} value={breed.id}>
                 {breed.name}
@@ -60,28 +55,23 @@ function Breeds() {
             ))}
           </NativeSelect>
         </FormControl>
-        {selectedBreed && (
-          <Grid container spacing={2} justifyContent="center" alignItems="center">
-            <Grid item xs={12}>
-              <Carousel showThumbs={false}>
-                {breedImages.map((imageUrl, index) => (
-                  <div key={index}>
-                    <img src={imageUrl} style={style} alt={`Breed ${selectedBreed} Image ${index}`} />
-                  </div>
-                ))}
-              </Carousel>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">{breedName}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="body1">{breedDescription}</Typography>
-            </Grid>
-
-          </Grid>
-        )}
+        <Grid item xs={12} margin={5} >
+          <Carousel showThumbs={false}>
+            {breedImages.map((imageUrl, index) => (
+              <div key={index}>
+                <img src={imageUrl} style={style} alt={`Breed ${selectedBreed} Image ${index}`} />
+              </div>
+            ))}
+          </Carousel>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h6">{breedName}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="body1">{breedDescription}</Typography>
+        </Grid>
       </Grid>
-    </Grid>
+    </Grid >
   );
 }
 
