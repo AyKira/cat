@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
@@ -6,7 +6,7 @@ import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
 import Typography from '@mui/material/Typography';
 import { Carousel } from 'react-responsive-carousel';
-import { setSelectedBreed, fetchListOfBreeds, fetchSelectedBreed } from '../../redux-modules/breedSlice';
+import { inputBreed, fetchDetails } from '../../redux-modules/breedSlice';
 import { getBreeds, getBreedDescription, getBreedImages, getBreedName, getSelectedBreed } from '../../redux-modules/breedSliceSelector';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
@@ -27,10 +27,11 @@ function Breeds() {
 
   //useEffect
   useEffect(() => {
-    dispatch(fetchListOfBreeds()).then(() => {
-      dispatch(fetchSelectedBreed());
-    });
+
+    dispatch(fetchDetails());
+
   }, [selectedBreed]);
+
 
 
   //style
@@ -49,7 +50,7 @@ function Breeds() {
           </InputLabel>
           <NativeSelect
             value={selectedBreed}
-            onChange={(e) => dispatch(setSelectedBreed(e.target.value))}
+            onChange={(e) => dispatch(inputBreed(e.target.value))}
             inputProps={{
               name: 'breed',
               id: 'breeds-selector',
