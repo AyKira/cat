@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Typography from '@mui/material/Typography';
 import { Carousel } from 'react-responsive-carousel';
 import { inputBreed, fetchDetails } from '../../redux-modules/breedSlice';
-import { getBreeds, getBreedDescription, getBreedImages, getBreedName, getSelectedBreed } from '../../redux-modules/breedSliceSelector';
+import { getBreedData } from '../../redux-modules/breedSliceSelector';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 
@@ -19,11 +19,8 @@ function Breeds() {
 
   //selector
   // const breeds = useSelector(store) => store.breeds.breeds;
-  const breeds = useSelector(getBreeds);
-  const breedDescription = useSelector(getBreedDescription);
-  const breedImages = useSelector(getBreedImages);
-  const breedName = useSelector(getBreedName);
-  const selectedBreed = useSelector(getSelectedBreed);
+  const { breeds, breedDescription, breedImages, breedName, selectedBreed } = useSelector(getBreedData);
+
 
   //useEffect
   useEffect(() => {

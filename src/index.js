@@ -7,7 +7,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import randomPictureSlice from './redux-modules/randomPictureSlice';
 import breedSlice from "./redux-modules/breedSlice";
 
-
 const store = configureStore({
     reducer: {
       randomPicture: randomPictureSlice,
