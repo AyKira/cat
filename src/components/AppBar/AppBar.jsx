@@ -21,17 +21,14 @@ function myAppBar({ toggleDrawer }) {
   return (
     <AppBar
       position="static"
-      onClick={() => toggleDrawer(true)}
+      onClick={() => toggleDrawer()}
       sx={styles.appBar}
       data-testid="app-bar"
     >
       <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
         <img src={catLogo} style={styles.catImage} data-testid="cat-logo" />
         <img src={catMiddle} style={styles.catLogo} data-testid="cat-middle" />
-        <img
-          src={catLogoMirror}
-          style={styles.catImage}
-          data-testid="cat-logo-mirror"
+        <img src={catLogoMirror} style={styles.catImage} data-testid="cat-logo-mirror"
         />
       </Toolbar>
     </AppBar>

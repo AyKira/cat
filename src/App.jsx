@@ -8,27 +8,27 @@ import Breeds from "./components/pages/Breeds";
 import Favorites from "./components/pages/Favorites";
 import Home from "./components/pages/Home";
 
-function App({ useInternalRouter = true }) {
+function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   function toggleDrawer() {
     setIsOpen(!isOpen);
   }
 
-  const content = (
+  return (
     <>
-      <AppBar toggleDrawer={toggleDrawer} />
-      <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/vote" element={<Vote />} />
-        <Route path="/breeds" element={<Breeds />} />
-        <Route path="/favorites" element={<Favorites />} />
-      </Routes>
+      <BrowserRouter>
+        <AppBar toggleDrawer={toggleDrawer} />
+        <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/vote" element={<Vote />} />
+          <Route path="/breeds" element={<Breeds />} />
+          <Route path="/favorites" element={<Favorites />} />
+        </Routes>
+      </BrowserRouter>
     </>
-  );
-
-  return useInternalRouter ? (<BrowserRouter>{content}</BrowserRouter>) : (content);
+  )
 }
 
 export default App;

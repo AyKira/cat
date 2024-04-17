@@ -23,36 +23,35 @@ const styles = {
 function Sidebar({ isOpen, toggleDrawer }) {
   const navigate = useNavigate();
 
-  function handleClickLink(href) {
-    return function () {
-      navigate(href);
-      toggleDrawer();
-    };
-  }
 
+  function handleClickLink(prop) {
+    navigate(prop);
+    toggleDrawer();
+  }
+  //onClose vyvolá akci jako onClick, tkaže udělám to že otočím isOpen na false pres toggleDrawer
   return (
     <Drawer open={isOpen} onClose={toggleDrawer} data-testid="side-bar">
       <ButtonBase
-        onClick={handleClickLink('/')}
+        onClick={() => handleClickLink('/')}
       >
         <img src={catSideBat} style={styles.sideCat} data-testid="cat" />
       </ButtonBase>
       <List>
         <ListItem>
-          <Button variant="contained" fullWidth onClick={handleClickLink('/vote')} data-testid="VOTE" sx={styles.sideBar}>
+          <Button variant="contained" fullWidth onClick={() => handleClickLink('/vote')} data-testid="VOTE" sx={styles.sideBar}>
             VOTE
           </Button>
         </ListItem>
         <ListItem>
           <Link to="/breeds">
-            <Button variant="contained" fullWidth onClick={handleClickLink('/breeds')} data-testid="BREEDS" sx={styles.sideBar}>
+            <Button variant="contained" fullWidth onClick={() => handleClickLink('/breeds')} data-testid="BREEDS" sx={styles.sideBar}>
               BREEDS
             </Button>
           </Link>
         </ListItem>
         <ListItem>
           <Link to="/favorites">
-            <Button variant="contained" fullWidth onClick={handleClickLink('/image-search')} data-testid="IMAGE/SEARCH" sx={styles.sideBar}>
+            <Button variant="contained" fullWidth onClick={() => handleClickLink('/image-search')} data-testid="IMAGE/SEARCH" sx={styles.sideBar}>
               FAVORITES
             </Button>
           </Link>
