@@ -1,4 +1,3 @@
-// Website.jsx
 import React, { useState } from "react";
 import AppBar from "./components/AppBar/AppBar";
 import Sidebar from "./components/SideBar/Sidebar";
@@ -17,8 +16,9 @@ function App() {
 
   return (
     <>
+
+      <AppBar toggleDrawer={toggleDrawer} />
       <BrowserRouter>
-        <AppBar toggleDrawer={toggleDrawer} />
         <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer} />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -27,6 +27,7 @@ function App() {
           <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </BrowserRouter>
+
     </>
   )
 }
