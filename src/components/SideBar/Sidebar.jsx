@@ -1,13 +1,10 @@
-
 import React from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import catSideBat from "../../images/catSideBat.png";
 import Button from "@mui/material/Button";
-import ButtonBase from "@mui/material/ButtonBase";
-import { Link, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   sideBar: (theme) => ({
@@ -30,13 +27,10 @@ function Sidebar({ isOpen, toggleDrawer }) {
   }
   //onClose vyvolá akci jako onClick, tkaže udělám to že otočím isOpen na false pres toggleDrawer
   return (
-
     <Drawer open={isOpen} onClose={toggleDrawer} data-testid="side-bar">
-      <ButtonBase
-        onClick={() => handleClickLink('/')}
-      >
+      <Button onClick={() => handleClickLink('/')}>
         <img src={catSideBat} style={styles.sideCat} data-testid="cat" />
-      </ButtonBase>
+      </Button>
       <List>
         <ListItem>
           <Button variant="contained" fullWidth onClick={() => handleClickLink('/vote')} data-testid="VOTE" sx={styles.sideBar}>
@@ -49,7 +43,7 @@ function Sidebar({ isOpen, toggleDrawer }) {
           </Button>
         </ListItem>
         <ListItem>
-          <Button variant="contained" fullWidth onClick={() => handleClickLink('/image-search')} data-testid="IMAGE/SEARCH" sx={styles.sideBar}>
+          <Button variant="contained" fullWidth onClick={() => handleClickLink('/favorites')} data-testid="IMAGE/SEARCH" sx={styles.sideBar}>
             FAVORITES
           </Button>
         </ListItem>
