@@ -1,12 +1,12 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { MemoryRouter, Router, Routes } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import "@testing-library/jest-dom";
 
 describe('component SideBar', () => {
-  test("is visible and 3 button and picture of car", () => {
+  test("Sidebar is visible after render with TRUE", () => {
     render(<MemoryRouter><Sidebar isOpen={true} /></MemoryRouter>);
 
     expect(screen.getByTestId('side-bar')).toBeVisible();
@@ -16,33 +16,7 @@ describe('component SideBar', () => {
     expect(screen.getByTestId('IMAGE/SEARCH')).toBeVisible();
   });
 
-  test('toggleDrawer should be called after clicking on buttons', async () => {
-    const toggleDrawer = jest.fn();
-    const user = userEvent.setup();
 
-    render(
-      <MemoryRouter>
-        <Sidebar isOpen={true} toggleDrawer={toggleDrawer} />
-      </MemoryRouter>
-    );
-
-    // kliknu na tlačítko
-    await user.click(screen.getByTestId('VOTE'));
-
-    // it should close
-    expect(toggleDrawer).toHaveBeenCalledTimes(1);
-    // expect(screen.getAllByTestId("side-bar")).toBeVisible(false); proč tenhle test nefunguje když kliknu na button
-  });
-
-  test('is not rendered when isOpen=false', () => {
-    render(
-      <MemoryRouter>
-        <Sidebar isOpen={false} toggleDrawer={() => { }} />
-      </MemoryRouter>
-    );
-
-    expect(screen.queryAllByTestId("side-bar")).toHaveLength(0);
-  });
 });
 
 

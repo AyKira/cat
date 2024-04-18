@@ -22,6 +22,8 @@ const styles = {
 
 function Sidebar({ isOpen, toggleDrawer }) {
   const navigate = useNavigate();
+  console.log("navigate");
+
 
 
   function handleClickLink(prop) {
