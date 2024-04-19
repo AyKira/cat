@@ -28,7 +28,7 @@ function Sidebar({ isOpen, toggleDrawer }) {
   //onClose vyvolá akci jako onClick, tkaže udělám to že otočím isOpen na false pres toggleDrawer
   return (
     <Drawer open={isOpen} onClose={toggleDrawer} data-testid="side-bar">
-      <Button onClick={() => handleClickLink('/')}>
+      <Button onClick={() => handleClickLink('/')} data-testid="CAT-BUTTON">
         <img src={catSideBat} style={styles.sideCat} data-testid="cat" />
       </Button>
       <List>

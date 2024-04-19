@@ -1,15 +1,19 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import "@testing-library/jest-dom";
 
-describe('component SideBar', () => {
-  test("is visible and 3 button and picture of car", () => {
-    render(<BrowserRouter><Sidebar isOpen={true} /></BrowserRouter>);
 
+jest.mock('react-router-dom', () => ({ ...jest.requireActual('react-router-dom'), useNavigate: jest.fn(), }));
+
+describe('component Sidebar', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  test("Sidebar is visible after render with all buttons with isOpen={true}", () => {
+    render(<BrowserRouter><Sidebar isOpen={true} /></BrowserRouter>);
     expect(screen.getByTestId('side-bar')).toBeVisible();
     expect(screen.getByTestId('cat')).toBeVisible();
     expect(screen.getByTestId('VOTE')).toBeVisible();
@@ -17,35 +21,35 @@ describe('component SideBar', () => {
     expect(screen.getByTestId('IMAGE/SEARCH')).toBeVisible();
   });
 
-  test('toggleDrawer should be called after clicking on buttons', async () => {
+  test('Sidebar is not visible when isOpen={false}', () => {
+    render(<BrowserRouter><Sidebar isOpen={false} /></BrowserRouter>);
+    expect(screen.queryByTestId("side-bar")).toBeNull();
+  });
+
+  test('Clicking on buttons will trigger navigation and toggleDrawer', async () => {
+    let mockNavigate = jest.fn();
+    useNavigate.mockReturnValue(mockNavigate);
+
     const toggleDrawer = jest.fn();
     const user = userEvent.setup();
 
     render(
       <BrowserRouter><Sidebar isOpen={true} toggleDrawer={toggleDrawer} /></BrowserRouter>);
 
-    // kliknu na tlačítko
-    await user.click(screen.getByTestId('VOTE'));
-
-    // it should close
+    await user.click(screen.getByTestId('CAT-BUTTON'));
     expect(toggleDrawer).toHaveBeenCalledTimes(1);
-    // expect(screen.getAllByTestId("side-bar")).toBeVisible(false); proč tenhle test nefunguje když kliknu na button
-  });
+    expect(mockNavigate).toHaveBeenCalledWith('/');
 
-  test('is not rendered when isOpen=false', () => {
-    render(
-      <BrowserRouter><Sidebar isOpen={false} toggleDrawer={() => { }} /></BrowserRouter>
-    );
+    await user.click(screen.getByTestId('VOTE'));
+    expect(toggleDrawer).toHaveBeenCalledTimes(2);
+    expect(mockNavigate).toHaveBeenCalledWith('/vote');
 
-    expect(screen.queryAllByTestId("side-bar")).toHaveLength(0);
+    await user.click(screen.getByTestId('BREEDS'));
+    expect(toggleDrawer).toHaveBeenCalledTimes(3);
+    expect(mockNavigate).toHaveBeenCalledWith('/breeds');
+
+    await user.click(screen.getByTestId('IMAGE/SEARCH'));
+    expect(toggleDrawer).toHaveBeenCalledTimes(4);
+    expect(mockNavigate).toHaveBeenCalledWith('/favorites');
   });
 });
-
-
-
-
-
-
-
-
-

@@ -21,7 +21,7 @@ function myAppBar({ toggleDrawer }) {
   return (
     <AppBar
       position="static"
-      onClick={() => toggleDrawer()}
+      onClick={toggleDrawer}
       sx={styles.appBar}
       data-testid="app-bar"
     >
